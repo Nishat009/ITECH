@@ -1,21 +1,22 @@
 import React, { useState, useContext } from "react";
+import "./AddProduct.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ProductContext } from "../ProductContext/ProductContext";
-import "./AddProduct.css";
+// import { UserContext } from "../UserContext/UserContext";
 
-const AddProduct = () => {
+const Create = () => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [profitPercentage, setProfitPercentage] = useState("");
-  const [type, setType] = useState("");
+  const [productType, setProductType] = useState("");
 
-  const [products, setProduct] = useContext(ProductContext);
+  const [products, setProducts] = useContext(ProductContext);
 
   const updateId = (e) => {
     setId(e.target.value);
-    console.log(id);
+    // console.log(id);
   };
 
   const updateName = (e) => {
@@ -29,56 +30,51 @@ const AddProduct = () => {
   const updateProfitPercentage = (e) => {
     setProfitPercentage(e.target.value);
   };
-  const updateType = (e) => {
-    setType(e.target.value);
+  const updateProductType = (e) => {
+    setProductType(e.target.value);
   };
-
-  const addProduct = (e) => {
-    
-    setProduct([
+  const addUser = (e) => {
+  
+    setProducts([
       ...products,
       {
         id: id,
         name: name,
         price: price,
         profitPercentage: profitPercentage,
-        productType: type,
+        productType: productType,
       },
-    ]);
+    ]);  
     e.preventDefault();
-
   };
 
   return (
-    <div className="container create   m-auto">
-      <Form className="mt-5  " onSubmit={addProduct}>
+    <div className="create container m-auto">
+      <Form className="mt-5" onSubmit={addUser}>
         <Form.Group>
           <Form.Label>ID</Form.Label>
           <Form.Control
-            type="number"
-            required
+            type="text"
             name="id"
             value={id}
             onChange={updateId}
-            placeholder="Enter Product ID"
+            placeholder="Enter ID"
           />
         </Form.Group>
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            required
             name="name"
             value={name}
             onChange={updateName}
-            placeholder="Enter Product Name"
+            placeholder="Enter Name"
           />
         </Form.Group>
         <Form.Group>
           <Form.Label>Price</Form.Label>
           <Form.Control
             type="number"
-            required
             name="price"
             value={price}
             onChange={updatePrice}
@@ -89,31 +85,33 @@ const AddProduct = () => {
           <Form.Label>Profit Percentage</Form.Label>
           <Form.Control
             type="number"
-            required
             name="profitPercentage"
             value={profitPercentage}
             onChange={updateProfitPercentage}
-            placeholder="Enter Profit Percentage"
+            placeholder="Enter Percentage"
           />
         </Form.Group>
         <Form.Group>
           <Form.Label>Product Type</Form.Label>
           <Form.Control
             type="text"
-            name="type"
-            value={type}
-            onChange={updateType}
+            name="productType"
+            value={productType}
+            onChange={updateProductType}
             placeholder="Enter Product Type"
           />
-        </Form.Group>
-        <Link to="/showProduct">
-        <Button className="action_btn m-5" variant="primary" type="submit">
-          Create Product
+        </Form.Group>  
+        <Button className=" mt-5" variant="primary" type="submit">
+          Create User
         </Button>
-        </Link>
+{/*       
+          <Button className="action_btn" variant="info">
+            Back to Home
+          </Button> */}
+       
       </Form>
     </div>
   );
 };
 
-export default AddProduct;
+export default Create;

@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../App";
 import "./Header.css";
+import firebase from "firebase";
+import "firebase/auth";
 const Header = () => {
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const handleSignOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        let signedOutUser = {
+          isSignedIn: false,
+          name: "",
+          email: "",
+          password: "",
+          photo: "",
+          error: "",
+          success: false,
+        };
+        setLoggedInUser(signedOutUser);
+      })
+      .catch((error) => {});
+  };
   return (
     <div>
       <Navbar
@@ -22,7 +44,6 @@ const Header = () => {
               <Link className=" menu" to="/dashboard">
                 Dashboard
               </Link>
-             
               <Link className=" menu" to="/about">
                 About
               </Link>
@@ -37,7 +58,13 @@ const Header = () => {
               </Link>
             </Nav>
             <Nav className="login-button">
-              <Link to="/login" class="btn  sign">Login</Link>
+               <Link to="#" className="nav-link active text-light">
+                {loggedInUser.displayName || loggedInUser.email}
+              </Link>
+              <Link to="/login" class="btn  sign" onClick={handleSignOut}>
+                {loggedInUser.email ? "Logout" : "Login"}
+              </Link>
+             
             </Nav>
           </Navbar.Collapse>
         </Container>

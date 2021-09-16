@@ -95,12 +95,10 @@ const EditProduct = () => {
           />
         </Form.Group>
         <Link to="/updateProduct">
-          <Button onSubmit={()=>editProduct} variant="primary" type="submit">
+          <Button className="mt-5" onSubmit={()=>editProduct} variant="primary" type="submit">
             Edit Product
           </Button>
-          <Button className="action_btn" variant="info">
-            Back to Home
-          </Button>
+          
         </Link>
       </Form>
     </div>
