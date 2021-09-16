@@ -101,6 +101,7 @@ const Create = () => {
             placeholder="Enter Product Type"
           />
         </Form.Group>  
+        
         <Button className=" mt-5" variant="primary" type="submit">
           Create User
         </Button>
