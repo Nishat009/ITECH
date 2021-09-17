@@ -1,0 +1,8 @@
+.tables{
+  width: 50%;
+}
+@media (max-width: 400px){
+  .tables{
+    width: 100%;
+  }
+}

@@ -48,6 +48,9 @@ function App() {
               <PrivateRoute path="/showProduct">
                 <ShowProduct></ShowProduct>
               </PrivateRoute>
+              <PrivateRoute path="/">
+                <Dashboard></Dashboard>
+              </PrivateRoute>
             </Switch>
           </Router>
         </div>

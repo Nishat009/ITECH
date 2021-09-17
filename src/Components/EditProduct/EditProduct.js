@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ProductContext } from "../ProductContext/ProductContext";
- import "./Edit.css";
+import "./Edit.css";
 import { useState } from "react";
 
 const EditProduct = () => {
@@ -14,9 +14,10 @@ const EditProduct = () => {
 
   const [name, setName] = useState(product[0].name);
   const [price, setPrice] = useState(product[0].price);
-  const [profitPercentage, setProfitPercentage] = useState(product[0].profitPercentage);
+  const [profitPercentage, setProfitPercentage] = useState(
+    product[0].profitPercentage
+  );
   const [productType, setProductType] = useState(product[0].productType);
-  
 
   const editName = (e) => {
     setName(e.target.value);
@@ -24,7 +25,7 @@ const EditProduct = () => {
     product[0].name = edited_name;
   };
 
-  const editPrice= (e) => {
+  const editPrice = (e) => {
     setPrice(e.target.value);
     const edited_price = price;
     product[0].price = edited_price;
@@ -48,6 +49,7 @@ const EditProduct = () => {
 
   return (
     <div className="container edit">
+      <h1 className="text-center">Edit Product Details</h1>
       <Form>
         <Form.Group>
           <Form.Label>
@@ -58,6 +60,7 @@ const EditProduct = () => {
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
+            required
             name="name"
             value={name}
             onChange={editName}
@@ -67,9 +70,11 @@ const EditProduct = () => {
         <Form.Group>
           <Form.Label>Price</Form.Label>
           <Form.Control
+            required
+            min={0}
             type="number"
             name="price"
-             value={price}
+            value={price}
             onChange={editPrice}
             placeholder={product[0].price}
           />
@@ -78,8 +83,10 @@ const EditProduct = () => {
           <Form.Label>Profit Percentage</Form.Label>
           <Form.Control
             type="number"
+            required
+            min={0}
             name="profitPercentage"
-             value={profitPercentage}
+            value={profitPercentage}
             onChange={editProfit}
             placeholder={product[0].profitPercentage}
           />
@@ -87,18 +94,23 @@ const EditProduct = () => {
         <Form.Group>
           <Form.Label>Product Type</Form.Label>
           <Form.Control
+            required
             type="text"
             name="productType"
-            // value={salary}
+            value={productType}
             onChange={editType}
             placeholder={product[0].productType}
           />
         </Form.Group>
         <Link to="/updateProduct">
-          <Button className="mt-5" onSubmit={()=>editProduct} variant="primary" type="submit">
+          <Button
+            className="mt-5"
+            onSubmit={() => editProduct}
+            variant="primary"
+            type="submit"
+          >
             Edit Product
           </Button>
-          
         </Link>
       </Form>
     </div>

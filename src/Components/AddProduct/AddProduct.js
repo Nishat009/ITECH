@@ -1,11 +1,17 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./AddProduct.css";
 import { Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+
 import { ProductContext } from "../ProductContext/ProductContext";
 // import { UserContext } from "../UserContext/UserContext";
-
-const Create = () => {
+function getSessionStorageOrDefault(key, defaultValue) {
+  const stored = sessionStorage.getItem(key);
+  if (!stored) {
+    return defaultValue;
+  }
+  return JSON.parse(stored);
+}
+const AddProduct = () => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -33,8 +39,9 @@ const Create = () => {
   const updateProductType = (e) => {
     setProductType(e.target.value);
   };
-  const addUser = (e) => {
-  
+
+  const addProduct = (e) => {
+    e.preventDefault();
     setProducts([
       ...products,
       {
@@ -44,18 +51,20 @@ const Create = () => {
         profitPercentage: profitPercentage,
         productType: productType,
       },
-    ]);  
-    e.preventDefault();
+    ]);
   };
 
   return (
     <div className="create container m-auto">
-      <Form className="mt-5" onSubmit={addUser}>
+      <h1 className="text-center">Add Product</h1>
+      <Form className="mt-5" onSubmit={addProduct}>
         <Form.Group>
           <Form.Label>ID</Form.Label>
           <Form.Control
             type="text"
+            required
             name="id"
+            min={1}
             value={id}
             onChange={updateId}
             placeholder="Enter ID"
@@ -64,6 +73,7 @@ const Create = () => {
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control
+            required
             type="text"
             name="name"
             value={name}
@@ -74,8 +84,10 @@ const Create = () => {
         <Form.Group>
           <Form.Label>Price</Form.Label>
           <Form.Control
+            required
             type="number"
             name="price"
+            min={0}
             value={price}
             onChange={updatePrice}
             placeholder="Enter Product Price"
@@ -84,6 +96,8 @@ const Create = () => {
         <Form.Group>
           <Form.Label>Profit Percentage</Form.Label>
           <Form.Control
+            required
+            min={0}
             type="number"
             name="profitPercentage"
             value={profitPercentage}
@@ -94,25 +108,25 @@ const Create = () => {
         <Form.Group>
           <Form.Label>Product Type</Form.Label>
           <Form.Control
+            required
             type="text"
             name="productType"
             value={productType}
             onChange={updateProductType}
             placeholder="Enter Product Type"
           />
-        </Form.Group>  
-        
+        </Form.Group>
+
         <Button className=" mt-5" variant="primary" type="submit">
-          Create User
+          Create Product
         </Button>
-{/*       
+        {/*       
           <Button className="action_btn" variant="info">
             Back to Home
           </Button> */}
-       
       </Form>
     </div>
   );
 };
 
-export default Create;
+export default AddProduct;

@@ -11,7 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
- import firebase from 'firebase';
+ import firebase from 'firebase/app';
  import "firebase/auth";
 import { useHistory, useLocation } from "react-router";
 import firebaseConfig from "./firebase.config";
@@ -78,22 +78,22 @@ const Login = () => {
 
     // google log in 
     const handleGoogleSignIn = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth()
-            .signInWithPopup(provider)
-            .then((result) => {
-                const { displayName, email } = result.user;
-                const signedInUser = { name: displayName, email }
-                setLoggedInUser(signedInUser);
-                history.replace(from);
-                const user = result.user;
-                
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage);
-            });
-    }
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth()
+      .signInWithPopup(googleProvider)
+      .then((result) => {
+        const { displayName, email } = result.user;
+        const signedInUser = { name: displayName, email }
+        setLoggedInUser(signedInUser)
+        history.replace(from);
+      }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        var email = error.email;
+        var credential = error.credential;
+        console.log(errorMessage, email, credential, errorCode)
+      });
+  }
   //handleBlur
   const handleBlur = (e) => {
     let isFieldValid = true;
